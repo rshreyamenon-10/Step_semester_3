@@ -6,7 +6,6 @@ public final class DischargeSummary {
     private final String[] medicationCodes;
 
     static {
-        // Shared one-time static setup if required
     }
 
     public DischargeSummary(String patientId, String[] medicationCodes) {
