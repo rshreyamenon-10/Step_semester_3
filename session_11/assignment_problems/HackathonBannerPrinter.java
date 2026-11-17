@@ -1,0 +1,45 @@
+import java.util.Stack;
+
+public class HackathonBannerPrinter {
+
+    public static String expandBanner(String code) {
+        Stack<Integer> countStack = new Stack<>();
+        Stack<StringBuilder> stringStack = new Stack<>();
+        StringBuilder currentString = new StringBuilder();
+        int k = 0;
+
+        for (int i = 0; i < code.length(); i++) {
+            char c = code.charAt(i);
+
+            if (Character.isDigit(c)) {
+                k = k * 10 + (c - '0');
+            } else if (c == '[') {
+                countStack.push(k);
+                stringStack.push(currentString);
+                currentString = new StringBuilder();
+                k = 0;
+            } else if (c == ']') {
+                int repeatCount = countStack.pop();
+                StringBuilder decodedString = stringStack.pop();
+                for (int j = 0; j < repeatCount; j++) {
+                    decodedString.append(currentString);
+                }
+                currentString = decodedString;
+            } else {
+                currentString.append(c);
+            }
+        }
+
+        return currentString.toString();
+    }
+
+    public static void main(String[] args) {
+        // Sample 1
+        String code1 = "3[ab]2[c]";
+        System.out.println("\"" + expandBanner(code1) + "\"");
+
+        // Sample 2
+        String code2 = "2[x3[y]]z";
+        System.out.println("\"" + expandBanner(code2) + "\"");
+    }
+}
